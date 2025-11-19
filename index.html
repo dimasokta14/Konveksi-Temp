@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konveksi Seragam Berkualitas - Termurah & Terpercaya</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        .price-table th {
+            background-color: #667eea;
+            color: white;
+            padding: 12px;
+            font-weight: 600;
+        }
+        
+        .price-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .price-table tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Data produk
+        const productCategories = [
+            {
+                id: 1,
+                name: "Kaos Seragam Olahraga",
+                image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
+                description: "Kaos olahraga sekolah dengan bahan berkualitas PE, BTM, dan Katun"
+            },
+            {
+                id: 2,
+                name: "Seragam Sekolah",
+                image: "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=500",
+                description: "Seragam SD, SMP, SMA dengan bahan Oxford dan TC berkualitas"
+            },
+            {
+                id: 3,
+                name: "Seragam Batik",
+                image: "https://images.unsplash.com/photo-1622519407650-3df9883f76a6?w=500",
+                description: "Seragam batik custom berbagai motif dan warna"
+            },
+            {
+                id: 4,
+                name: "Jas Almamater",
+                image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
+                description: "Jas almamater dengan bordir logo gratis"
+            },
+            {
+                id: 5,
+                name: "PDH / PDL",
+                image: "https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=500",
+                description: "Seragam PDH dan PDL dengan berbagai pilihan bahan"
+            },
+            {
+                id: 6,
+                name: "Jilbab Sekolah",
+                image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500",
+                description: "Jilbab sekolah SD, SMP, SMA dengan sablon gratis"
+            }
+        ];
+
+        const priceData = {
+            kaosOlahraga: [
+                {
+                    level: "TK",
+                    prices: [
+                        { material: "PE + Lotto", pp: "Rp. 45.000", pdp: "Rp. 43.000", pd: "Rp. 40.000" },
+                        { material: "PE + Diadora", pp: "Rp. 52.000", pdp: "Rp. 50.000", pd: "Rp. 47.000" },
+                        { material: "BTM + Lotto", pp: "Rp. 51.000", pdp: "Rp. 48.000", pd: "Rp. 46.000" },
+                        { material: "BTM + Diadora", pp: "Rp. 56.000", pdp: "Rp. 54.000", pd: "Rp. 51.000" },
+                        { material: "Katun + Lotto", pp: "Rp. 65.000", pdp: "Rp. 65.000", pd: "Rp. 60.000" },
+                        { material: "Katun + Diadora", pp: "Rp. 70.000", pdp: "Rp. 68.000", pd: "Rp. 65.000" }
+                    ]
+                },
+                {
+                    level: "SD",
+                    prices: [
+                        { material: "PE + Lotto", pp: "Rp. 50.000", pdp: "Rp. 48.000", pd: "Rp. 45.000" },
+                        { material: "PE + Diadora", pp: "Rp. 57.000", pdp: "Rp. 55.000", pd: "Rp. 53.000" },
+                        { material: "BTM + Lotto", pp: "Rp. 56.000", pdp: "Rp. 54.000", pd: "Rp. 51.000" },
+                        { material: "BTM + Diadora", pp: "Rp. 63.000", pdp: "Rp. 61.000", pd: "Rp. 59.000" },
+                        { material: "Katun + Lotto", pp: "Rp. 70.000", pdp: "Rp. 68.000", pd: "Rp. 65.000" },
+                        { material: "Katun + Diadora", pp: "Rp. 75.000", pdp: "Rp. 73.000", pd: "Rp. 70.000" }
+                    ]
+                }
+            ],
+            seragamBatik: [
+                { level: "TK", lenganPanjang: "Rp. 42.000", lenganPendek: "Rp. 40.000" },
+                { level: "SD", lenganPanjang: "Rp. 47.000", lenganPendek: "Rp. 44.000" },
+                { level: "SMP", lenganPanjang: "Rp. 52.000", lenganPendek: "Rp. 50.000" },
+                { level: "SMA", lenganPanjang: "Rp. 57.000", lenganPendek: "Rp. 54.000" }
+            ]
+        };
+
+        const features = [
+            {
+                icon: "⏰",
+                title: "Tepat Waktu",
+                description: "Kami selalu memastikan pesanan selesai sesuai kesepakatan"
+            },
+            {
+                icon: "🎓",
+                title: "Berpengalaman",
+                description: "Pengalaman bertahun-tahun dalam industri konveksi"
+            },
+            {
+                icon: "⚙️",
+                title: "Mesin Mutakhir",
+                description: "Menggunakan mesin terbaru untuk hasil maksimal"
+            },
+            {
+                icon: "⭐",
+                title: "Kualitas Terbaik",
+                description: "Produk berkualitas tinggi dengan kredibilitas terpercaya"
+            },
+            {
+                icon: "💰",
+                title: "Harga Terjangkau",
+                description: "Harga kompetitif tanpa mengurangi kualitas"
+            },
+            {
+                icon: "🤝",
+                title: "Transaksi Mudah",
+                description: "Proses pemesanan yang cepat dan mudah"
+            }
+        ];
+
+        // Komponen Header
+        function Header({ activeSection, setActiveSection }) {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const menuItems = [
+                { id: 'home', label: 'Beranda' },
+                { id: 'products', label: 'Produk' },
+                { id: 'prices', label: 'Harga' },
+                { id: 'features', label: 'Keunggulan' },
+                { id: 'contact', label: 'Kontak' }
+            ];
+
+            return (
+                <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
+                    <div className="container mx-auto px-4 py-4">
+                        <div className="flex justify-between items-center">
+                            <div className="text-2xl font-bold">
+                                <span className={`${isScrolled ? 'text-purple-600' : 'text-white'}`}>Konveksi</span>
+                                <span className={`${isScrolled ? 'text-gray-800' : 'text-yellow-300'}`}>Pro</span>
+                            </div>
+                            
+                            {/* Desktop Menu */}
+                            <nav className="hidden md:flex space-x-8">
+                                {menuItems.map(item => (
+                                    <a
+                                        key={item.id}
+                                        href={`#${item.id}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActiveSection(item.id);
+                                            document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                                        }}
+                                        className={`font-medium transition-colors ${
+                                            isScrolled 
+                                                ? 'text-gray-700 hover:text-purple-600' 
+                                                : 'text-white hover:text-yellow-300'
+                                        } ${activeSection === item.id ? 'border-b-2 border-current' : ''}`}
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </nav>
+
+                            {/* Mobile Menu Button */}
+                            <button 
+                                className="md:hidden"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            >
+                                <svg className={`w-6 h-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMobileMenuOpen && (
+                            <nav className="md:hidden mt-4 bg-white rounded-lg shadow-lg p-4">
+                                {menuItems.map(item => (
+                                    <a
+                                        key={item.id}
+                                        href={`#${item.id}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActiveSection(item.id);
+                                            setIsMobileMenuOpen(false);
+                                            document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                                        }}
+                                        className="block py-2 text-gray-700 hover:text-purple-600 font-medium"
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </nav>
+                        )}
+                    </div>
+                </header>
+            );
+        }
+
+        // Komponen Hero
+        function Hero() {
+            return (
+                <section id="home" className="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
+                    </div>
+                    
+                    <div className="container mx-auto px-4 text-center relative z-10 animate-fade-in">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="inline-block bg-yellow-400 text-purple-900 px-6 py-2 rounded-full font-semibold mb-6">
+                                🎉 Gratis Ongkir Se-Indonesia
+                            </div>
+                            
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                                Konveksi Seragam
+                                <br />
+                                <span className="text-yellow-300">Berkualitas Premium</span>
+                            </h1>
+                            
+                            <p className="text-xl md:text-2xl text-white mb-8 opacity-90">
+                                Produsen seragam sekolah, kaos olahraga, dan batik dengan harga termurah.
+                                <br />
+                                Melayani pesanan kecil hingga besar dengan kualitas terbaik.
+                            </p>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <a 
+                                    href="#products" 
+                                    className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 hover:text-purple-900 transition-all hover-scale"
+                                >
+                                    Lihat Produk
+                                </a>
+                                <a 
+                                    href="https://wa.me/6281234567890" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-green-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition-all hover-scale"
+                                >
+                                    💬 Hubungi Kami
+                                </a>
+                            </div>
+                            
+                            <div className="mt-12 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+                                <div className="text-white">
+                                    <div className="text-4xl font-bold">98%</div>
+                                    <div className="text-sm opacity-80">Kepuasan Pelanggan</div>
+                                </div>
+                                <div className="text-white">
+                                    <div className="text-4xl font-bold">10+</div>
+                                    <div className="text-sm opacity-80">Tahun Pengalaman</div>
+                                </div>
+                                <div className="text-white">
+                                    <div className="text-4xl font-bold">5000+</div>
+                                    <div className="text-sm opacity-80">Pesanan Selesai</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
+                    </div>
+                </section>
+            );
+        }
+
+        // Komponen Products
+        function Products() {
+            return (
+                <section id="products" className="py-20 bg-gray-50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                                Produk Kami
+                            </h2>
+                            <p className="text-xl text-gray-600">
+                                Berbagai pilihan produk konveksi berkualitas untuk kebutuhan Anda
+                            </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {productCategories.map(product => (
+                                <div 
+                                    key={product.id} 
+                                    className="bg-white rounded-2xl overflow-hidden card-shadow hover-scale cursor-pointer"
+                                >
+                                    <div className="h-64 overflow-hidden">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.name}
+                                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                                        />
+                                    </div>
+                                    <div className="p-6">
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                                            {product.name}
+                                        </h3>
+                                        <p className="text-gray-600 mb-4">
+                                            {product.description}
+                                        </p>
+                                        <button className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+                                            Lihat Detail
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // Komponen Prices
+        function Prices() {
+            const [activeTab, setActiveTab] = useState('kaos');
+
+            return (
+                <section id="prices" className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                                Daftar Harga
+                            </h2>
+                            <p className="text-xl text-gray-600">
+                                Harga terjangkau dengan kualitas terbaik
+                            </p>
+                        </div>
+                        
+                        {/* Tab Menu */}
+                        <div className="flex justify-center mb-10 flex-wrap gap-4">
+                            <button 
+                                onClick={() => setActiveTab('kaos')}
+                                className={`px-6 py-3 rounded-full font-semibold transition-all ${
+                                    activeTab === 'kaos' 
+                                        ? 'bg-purple-600 text-white' 
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                }`}
+                            >
+                                Kaos Olahraga
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('batik')}
+                                className={`px-6 py-3 rounded-full font-semibold transition-all ${
+                                    activeTab === 'batik' 
+                                        ? 'bg-purple-600 text-white' 
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                }`}
+                            >
+                                Seragam Batik
+                            </button>
+                        </div>
+
+                        {/* Price Tables */}
+                        {activeTab === 'kaos' && (
+                            <div className="space-y-10">
+                                {priceData.kaosOlahraga.map((category, idx) => (
+                                    <div key={idx} className="overflow-x-auto">
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                                            Seragam {category.level}
+                                        </h3>
+                                        <table className="price-table w-full bg-white rounded-lg overflow-hidden shadow-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th className="text-left">Bahan</th>
+                                                    <th>Panjang - Panjang</th>
+                                                    <th>Pendek - Panjang</th>
+                                                    <th>Pendek - Pendek</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {category.prices.map((price, pidx) => (
+                                                    <tr key={pidx}>
+                                                        <td className="font-semibold">{price.material}</td>
+                                                        <td className="text-center text-purple-600 font-bold">{price.pp}</td>
+                                                        <td className="text-center text-purple-600 font-bold">{price.pdp}</td>
+                                                        <td className="text-center text-purple-600 font-bold">{price.pd}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {activeTab === 'batik' && (
+                            <div className="overflow-x-auto">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                                    Seragam Batik (Import Quality)
+                                </h3>
+                                <table className="price-table w-full bg-white rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                                    <thead>
+                                        <tr>
+                                            <th className="text-left">Jenjang</th>
+                                            <th>Lengan Panjang</th>
+                                            <th>Lengan Pendek</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {priceData.seragamBatik.map((item, idx) => (
+                                            <tr key={idx}>
+                                                <td className="font-semibold">{item.level}</td>
+                                                <td className="text-center text-purple-600 font-bold">{item.lenganPanjang}</td>
+                                                <td className="text-center text-purple-600 font-bold">{item.lenganPendek}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <p className="text-center text-gray-600 mt-4">
+                                    * Gratis sablon | Bordir +Rp. 3.000
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="text-center mt-12">
+                            <a 
+                                href="https://wa.me/6281234567890"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block bg-green-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition-all hover-scale"
+                            >
+                                💬 Tanya Harga Lengkap
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // Komponen Features
+        function Features() {
+            return (
+                <section id="features" className="py-20 gradient-bg">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                                Mengapa Memilih Kami?
+                            </h2>
+                            <p className="text-xl text-white opacity-90">
+                                Keunggulan yang membuat kami menjadi pilihan terbaik
+                            </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {features.map((feature, idx) => (
+                                <div 
+                                    key={idx}
+                                    className="bg-white rounded-2xl p-8 card-shadow hover-scale"
+                                >
+                                    <div className="text-5xl mb-4">{feature.icon}</div>
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                                        {feature.title}
+                                    </h3>
+                                    <p className="text-gray-600">
+                                        {feature.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // Komponen Contact
+        function Contact() {
+            const [formData, setFormData] = useState({
+                name: '',
+                phone: '',
+                email: '',
+                message: ''
+            });
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const waMessage = `Halo, saya ${formData.name}%0ATelepon: ${formData.phone}%0AEmail: ${formData.email}%0APesan: ${formData.message}`;
+                window.open(`https://wa.me/6281234567890?text=${waMessage}`, '_blank');
+            };
+
+            return (
+                <section id="contact" className="py-20 bg-gray-50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                                Hubungi Kami
+                            </h2>
+                            <p className="text-xl text-gray-600">
+                                Siap melayani kebutuhan konveksi Anda
+                            </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                            {/* Contact Info */}
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-2xl p-8 card-shadow">
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-6">
+                                        Informasi Kontak
+                                    </h3>
+                                    
+                                    <div className="space-y-4">
+                                        <div className="flex items-start">
+                                            <div className="text-2xl mr-4">📱</div>
+                                            <div>
+                                                <div className="font-semibold text-gray-800">WhatsApp</div>
+                                                <div className="text-gray-600">+62 812-3456-7890</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-start">
+                                            <div className="text-2xl mr-4">📧</div>
+                                            <div>
+                                                <div className="font-semibold text-gray-800">Email</div>
+                                                <div className="text-gray-600">info@konveksipro.com</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-start">
+                                            <div className="text-2xl mr-4">📍</div>
+                                            <div>
+                                                <div className="font-semibold text-gray-800">Alamat</div>
+                                                <div className="text-gray-600">Jl. Konveksi No. 123, Jakarta Selatan</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-start">
+                                            <div className="text-2xl mr-4">⏰</div>
+                                            <div>
+                                                <div className="font-semibold text-gray-800">Jam Operasional</div>
+                                                <div className="text-gray-600">Senin - Sabtu: 08.00 - 17.00 WIB</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Contact Form */}
+                            <div className="bg-white rounded-2xl p-8 card-shadow">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-6">
+                                    Kirim Pesan
+                                </h3>
+                                
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    <div>
+                                        <label className="block text-gray-700 font-semibold mb-2">
+                                            Nama Lengkap
+                                        </label>
+                                        <input 
+                                            type="text"
+                                            required
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600"
+                                            placeholder="Masukkan nama Anda"
+                                        />
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-gray-700 font-semibold mb-2">
+                                            Nomor WhatsApp
+                                        </label>
+                                        <input 
+                                            type="tel"
+                                            required
+                                            value={formData.phone}
+                                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600"
+                                            placeholder="08xxxxxxxxxx"
+                                        />
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-gray-700 font-semibold mb-2">
+                                            Email
+                                        </label>
+                                        <input 
+                                            type="email"
+                                            required
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600"
+                                            placeholder="email@example.com"
+                                        />
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-gray-700 font-semibold mb-2">
+                                            Pesan
+                                        </label>
+                                        <textarea 
+                                            required
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({...formData, message: e.target.value})}
+                                            rows="4"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600"
+                                            placeholder="Ceritakan kebutuhan Anda..."
+                                        ></textarea>
+                                    </div>
+                                    
+                                    <button 
+                                        type="submit"
+                                        className="w-full bg-purple-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-purple-700 transition-all hover-scale"
+                                    >
+                                        Kirim Pesan
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // Komponen Footer
+        function Footer() {
+            return (
+                <footer className="bg-gray-900 text-white py-12">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                            <div>
+                                <h3 className="text-2xl font-bold mb-4">
+                                    <span className="text-purple-400">Konveksi</span>
+                                    <span className="text-yellow-400">Pro</span>
+                                </h3>
+                                <p className="text-gray-400">
+                                    Produsen konveksi terpercaya dengan pengalaman lebih dari 10 tahun.
+                                    Melayani se-Indonesia dengan kualitas terbaik.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 className="text-xl font-bold mb-4">Link Cepat</h4>
+                                <ul className="space-y-2">
+                                    <li><a href="#home" className="text-gray-400 hover:text-white transition-colors">Beranda</a></li>
+                                    <li><a href="#products" className="text-gray-400 hover:text-white transition-colors">Produk</a></li>
+                                    <li><a href="#prices" className="text-gray-400 hover:text-white transition-colors">Harga</a></li>
+                                    <li><a href="#features" className="text-gray-400 hover:text-white transition-colors">Keunggulan</a></li>
+                                    <li><a href="#contact" className="text-gray-400 hover:text-white transition-colors">Kontak</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 className="text-xl font-bold mb-4">Jam Operasional</h4>
+                                <p className="text-gray-400 mb-2">Senin - Jumat: 08.00 - 17.00 WIB</p>
+                                <p className="text-gray-400 mb-4">Sabtu: 08.00 - 14.00 WIB</p>
+                                <p className="text-gray-400">Minggu: Libur</p>
+                            </div>
+                        </div>
+                        
+                        <div className="border-t border-gray-800 pt-8 text-center">
+                            <p className="text-gray-400">
+                                © 2025 KonveksiPro. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+
+        // WhatsApp Float Button
+        function WhatsAppFloat() {
+            return (
+                <a 
+                    href="https://wa.me/6281234567890"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp-float"
+                    title="Chat via WhatsApp"
+                >
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </a>
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [activeSection, setActiveSection] = useState('home');
+
+            return (
+                <div className="font-sans">
+                    <Header activeSection={activeSection} setActiveSection={setActiveSection} />
+                    <Hero />
+                    <Products />
+                    <Prices />
+                    <Features />
+                    <Contact />
+                    <Footer />
+                    <WhatsAppFloat />
+                </div>
+            );
+        }
+
+        // Render App
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

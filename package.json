@@ -1,0 +1,13 @@
+{
+  "name": "konveksi-website",
+  "version": "1.0.0",
+  "description": "Website Konveksi Seragam Berkualitas",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "start": "vercel dev"
+  },
+  "keywords": ["konveksi", "seragam", "kaos"],
+  "author": "",
+  "license": "MIT"
+}
